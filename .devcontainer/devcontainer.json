@@ -1,0 +1,16 @@
+{
+  "name": "Shift Host Machine",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+  },
+  "customizations": {
+    "codespaces": {
+      "openPorts": ["4000", "3001", "3002", "3003", "3004", "3005"]
+    }
+  },
+  "portsAttributes": {
+    "4000": { "label": "Shift Agent", "onAutoForward": "silent", "visibility": "public" },
+    "3001-3005": { "label": "User Apps", "onAutoForward": "silent", "visibility": "public" }
+  },
+  "postCreateCommand": "npm run agent.js"
+}
