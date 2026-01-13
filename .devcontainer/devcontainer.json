@@ -1,7 +1,7 @@
 {
   "name": "Shift Host Machine",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2.13.0": {}
   },
   "customizations": {
     "codespaces": {
@@ -12,5 +12,6 @@
     "4000": { "label": "Shift Agent", "onAutoForward": "silent", "visibility": "public" },
     "3001-3005": { "label": "User Apps", "onAutoForward": "silent", "visibility": "public" }
   },
-  "postCreateCommand": "node agent.js"
+   
+  "postCreateCommand": "curl -sL ${GATEWAY_URL}/api/internal/download-agent -o agent.js || echo 'Using local agent' && node agent.js"
 }
