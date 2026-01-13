@@ -30,5 +30,6 @@
     }
   },
   "postCreateCommand": "curl -sL ${GATEWAY_URL}/api/internal/download-agent -o agent.js",
-  "postStartCommand": "node agent.js"
+  
+  "postStartCommand": "node agent.js &"
 }
