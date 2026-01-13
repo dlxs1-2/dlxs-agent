@@ -1,17 +1,38 @@
 {
-  "name": "Shift Host Machine",
+  "name": "Shift Host Node",
+  // Using the universal image is more robust for infrastructure tasks
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2.13.0": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    // FORCE Node.js installation to ensure it's in the PATH
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
   },
   "customizations": {
     "codespaces": {
-      "openPorts": ["4000", "3001", "3002", "3003", "3004", "3005"]
+      "openPorts": [
+        "4000",
+        "3001",
+        "3002",
+        "3003"
+      ]
     }
   },
   "portsAttributes": {
-    "4000": { "label": "Shift Agent", "onAutoForward": "silent", "visibility": "public" },
-    "3001-3005": { "label": "User Apps", "onAutoForward": "silent", "visibility": "public" }
+    "4000": {
+      "label": "Shift Agent",
+      "onAutoForward": "silent",
+      "visibility": "public"
+    },
+    "3001-3010": {
+      "label": "User Apps",
+      "onAutoForward": "silent",
+      "visibility": "public"
+    }
   },
-   
-  "postCreateCommand": "curl -sL ${GATEWAY_URL}/api/internal/download-agent -o agent.js || echo 'Using local agent' && node agent.js"
+  // We combine these into postCreate to ensure the agent is ready before boot
+  "postCreateCommand": "curl -sL ${GATEWAY_URL}/api/internal/download-agent -o agent.js",
+  // Start the agent in the background so it doesn't block the container
+  "postStartCommand": "node agent.js &"
 }
