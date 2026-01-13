@@ -12,5 +12,5 @@
     "4000": { "label": "Shift Agent", "onAutoForward": "silent", "visibility": "public" },
     "3001-3005": { "label": "User Apps", "onAutoForward": "silent", "visibility": "public" }
   },
-  "postCreateCommand": "npm run agent.js"
+  "postCreateCommand": "node agent.js"
 }
